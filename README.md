@@ -1,0 +1,1 @@
+compile epEBench with <make -f makefile_arm> for armv7 systems or <make -f makefile_arm> for x86_64 ISA
