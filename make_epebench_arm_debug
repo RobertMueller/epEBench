@@ -1,8 +1,0 @@
-#! /bin/bash -x
-
-g++ -Wall -fexceptions -g -pthread -D __x86__ -D _DEBUG -c main_ebench.cpp -o obj/Debug/main_ebench.o
-g++ -Wall -fexceptions -g -pthread -D __x86__ -D _DEBUG -c cpu_status.cpp -o obj/Debug/cpu_status.o
-g++ -Wall -fexceptions -g -pthread -D __x86__ -D _DEBUG -c ebloads.cpp -o obj/Debug/ebloads.o
-g++ -Wall -fexceptions -g -pthread -D __x86__ -D _DEBUG -c ebmodels.cpp -o obj/Debug/ebmodels.o
-
-g++ -o bin/Debug/epEBench obj/Debug/cpu_status.o obj/Debug/ebloads.o obj/Debug/ebmodels.o obj/Debug/main_ebench.o -s -pthread
