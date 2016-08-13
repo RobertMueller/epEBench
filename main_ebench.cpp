@@ -2,11 +2,11 @@
  * PROJECT      epEBench - Enhanced Parametrizable Energy Benchmark
  * FILE NAME    main_ebench.cpp
  * INSTITUTION  Fernuni Hagen
- * REVISION     1.0
+ * REVISION     1.0.3
  * PREFIX
  * DESCRIPTION  Freely configurable Energy Benchmark for multicore ARM based embedded systems.
-
- * CREATED      06-March-16, Robert Mueller
+ *
+ * CREATED      13-Aug-16, Robert Mueller
  * MODIFIED     n/a
  *-------------------------------------------------------------------
  * Full Description: EpEBench is capable of creating a realistic workload on a multi-core system,
@@ -15,6 +15,20 @@
  *
  *-------------------------------------------------------------------
  * LICENCE      BSD-3
+ *
+ * Copyright (c) 2016, Robert Müller. All rights reserved.			  
+ * Copyright (c) 2016, Fernuniversität in Hagen. All rights reserved.		  
+ * 										   */
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *      * Redistributions of source code must retain the above copyright
+ *        notice, this list of conditions and the following disclaimer.
+ *      * Redistributions in binary form must reproduce the above copyright
+ *        notice, this list of conditions and the following disclaimer in the
+ *        documentation and/or other materials provided with the distribution.
+ *      * Neither the name of the Åbo Akademi University nor the
+ *        names of its contributors may be used to endorse or promote products
+ *        derived from this software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
