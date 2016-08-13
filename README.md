@@ -1,19 +1,31 @@
-This benchmark was designed during my master thesis to evaluate the energy consumption by using diverse workload on multi-core systems.
+epEBench Energy Benchmark
+=========================
 
+This benchmark system was designed during my master thesis to evaluate the energy consumption by using diverse workload on multi-core systems.
+
+Features
+-------
 It is capable of:
 
-    - Allocating a number of worker threads to execute certain workload models and operations
-    - Providing realistic workloads (vidplay -> multimedia app / gzip -> gzip app)
-    - Workload models can be added and their properties be modified
-    - Number of operations and operation types are selectable by the user
-    - CPU workload can be set in percentage per thread or in total 
-    - Executing load pattern with different workloads, thread counts and periods
+>- Allocating a number of worker threads to execute certain workload models and operations
+>- Providing realistic workloads (**vidplay** -> multimedia app / **gzip** -> gzip app)
+>- Workload models can be added and their properties be modified (edit **ebmodels.ini** file)
+>- Number of operations and operation types are selectable by the user
+>- CPU workload can be set in percentage per thread or in total 
+>- Executing load pattern with different workloads, thread counts and periods
 
-Compile epEBench with "make -f makefile_arm" for armv7 systems or "make -f makefile_arm" for x86_64 ISA
+Compilation
+-------
+Compile epEBench with **make -f makefile_arm** for armv7 systems or **make -f makefile_arm** for x86_64 ISA
+Benchmarking
+-------
+Initiate a simple testrun with **./epebench -m vidplay -a 3 -n 4 -u 30 -t 20**
 
-Initiate a simple testrun with ./epebench -m vidplay -a 4 -n 4 -u 30 -t 30
+This allocates four threads *[-n]* executing the **vidplay** workload *[-m]* distributed on three cores *[-a]* with a total CPU load of 30% *[-u]* for 20 seconds *[-t]*.
 
-usage: epebench [-h] [-v] [-tTIME] [-iINSTR] [-mMODEL] [-nTHREADS] [-aCPU] [-uUSAGE] [-d] [-p]\
+Manual
+-------
+usage: **epebench [-h] [-v] [-tTIME] [-iINSTR] [-mMODEL] [-nTHREADS] [-aCPU] [-uUSAGE] [-d] [-p]**
 
 Options:
 
@@ -34,8 +46,7 @@ Options:
 	-v 	                    show epEBench version
 	
 	
-Note-1: List of elements in test pattern mode loops cyclically until last element of longest list is reached.
-Means, amount of testruns is defined by longest parameter list.
+Note-1: List of elements in test pattern mode loops cyclically until last element of longest list is reached. Means, amount of testruns is defined by longest parameter list.
 
 Note-2: If no option is passed, benchmark starts with default values.
 
