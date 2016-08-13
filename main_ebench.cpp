@@ -14,7 +14,7 @@
  *              on the CPU
  *
  *-------------------------------------------------------------------
- * LICENCE      BSD-3
+ * LICENSE      BSD-3
  *
  * Copyright (c) 2016, Robert Müller. All rights reserved.			  
  * Copyright (c) 2016, Fernuniversität in Hagen. All rights reserved.		  
