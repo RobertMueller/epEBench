@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="epEBench" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/epebench" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option parameters="-m vidplay -r -u 110" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-D_DEBUG" />
+					<Add option="-D_PIN_CORE" />
+					<Add option="-D_CPULOAD_CNTR" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/epebench" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option parameters="-m vidplay -n 4 -a 4 -u 70 -r" />
+				<Compiler>
+					<Add option="-D_PIN_CORE" />
+					<Add option="-D_CPULOAD_CNTR" />
+				</Compiler>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="cpu_status.cpp" />
+		<Unit filename="cpu_status.h" />
+		<Unit filename="ebench.h" />
+		<Unit filename="ebloads.cpp" />
+		<Unit filename="ebloads.h" />
+		<Unit filename="ebmodels.cpp" />
+		<Unit filename="ebmodels.h" />
+		<Unit filename="globals.cpp">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="globals.h" />
+		<Unit filename="main_ebench.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
