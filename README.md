@@ -14,6 +14,12 @@ It is capable of:
 >- CPU workload can be set in percentage per thread or in total 
 >- Executing load pattern with different workloads, thread counts and periods
 
+Two implemented workloads (vidplay and gzip) replicate behavior of real applications in resprect to instruction mix characteristic.
+
+**vidplay**: Simulates video-player workload (QoS type)
+
+**gzip**: Simulates gzip workload (performance type)
+
 Compilation
 -------
 Compile epEBench with **make -f makefile_arm** for armv7 systems or **make -f makefile_arm** for x86_64 ISA
@@ -25,7 +31,7 @@ This allocates four threads *[-n]* executing the **vidplay** workload *[-m]* dis
 
 Manual
 -------
-usage: **epebench [-h] [-v] [-tTIME] [-iINSTR] [-mMODEL] [-nTHREADS] [-aCPU] [-uUSAGE] [-d] [-p]**
+usage: ``epebench [-h] [-v] [-tTIME] [-iINSTR] [-mMODEL] [-nTHREADS] [-aCPU] [-uUSAGE] [-d] [-p] [-r]``
 
 Options:
 
