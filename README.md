@@ -1,4 +1,4 @@
-epEBench Energy Benchmark
+epEBench - The Energy Benchmark
 =========================
 
 This benchmark system was designed during my master thesis to evaluate the energy consumption by using diverse workload on multi-core systems.
