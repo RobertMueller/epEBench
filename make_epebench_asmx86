@@ -1,9 +1,0 @@
-#! /bin/bash -x
-
-g++ -Wall -fexceptions -O2 -pthread -D __x86__  -c main_ebench.cpp -o obj/Release/main_ebench.o
-g++ -Wall -fexceptions -O2 -pthread -D __x86__  -c cpu_status.cpp -o obj/Release/cpu_status.o
-g++ -S -O2 -Wall -fexceptions -pthread -D __x86__ -c ebloads.cpp -o obj/Release/ebloads_noOpti.s
-
-g++ -Wall -fexceptions -O2 -pthread -D __x86__  -c ebmodels.cpp -o obj/Release/ebmodels.o
-
-g++  -o bin/Release/epEBench obj/Release/cpu_status.o obj/Release/ebloads.o obj/Release/ebmodels.o obj/Release/main_ebench.o -pthread -s

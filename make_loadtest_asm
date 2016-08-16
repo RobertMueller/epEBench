@@ -1,6 +1,0 @@
-#! /bin/bash -x
-
-gcc -Wall -fexceptions -O2 -mfpu=neon -D __arm__  -c main_loadtest.cpp -o main_loadtest.o
-gcc -Wall -fexceptions -O2 -floop-optimize -mfpu=neon -D __arm__  -c ebloads.cpp -o ebloads.o
-
-gcc  -o loadtest ebloads.o main_loadtest.o -s
