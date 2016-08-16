@@ -1,7 +1,7 @@
-epEBench - The Energy Benchmark
+epEBench - Energy Benchmark
 =========================
 
-This benchmark system was designed during my master thesis to evaluate the energy consumption by using diverse workload on multi-core systems.
+This benchmark system was designed because of the need to generate diverse, customizable workload for evaluating the energy consumption on multi-core systems. 
 
 Features
 -------
