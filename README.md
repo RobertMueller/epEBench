@@ -24,15 +24,15 @@ In order to run certain operations as workload, refer to **ebmodels.ini** file.
 
 Compilation
 -------
-Compile epEBench with **make -f makefile_arm** for armv7 systems or **make -f makefile_arm** for x86_64 ISA
+Compile epEBench with ``make -f makefile_arm`` for armv7 systems or ``make -f makefile_arm`` for x86_64 ISA
 Benchmarking
 -------
-Initiate a simple testrun with **./epebench -m vidplay -a 3 -n 4 -u 30 -t 20**
+Initiate a simple testrun with ``./epebench -m vidplay -a 3 -n 4 -u 30 -t 20``
 
 This allocates four threads *[-n]* executing the **vidplay** workload *[-m]* distributed on three cores *[-a]* with a total CPU load of 30% *[-u]* for 20 seconds *[-t]*.
 The following example shows, how to starts two different models running on four threads with different usage level each (vidplay: cpu0+1 @ 30% load per thread / gzip: cpu2+3 @ 90% load per thread).
 
-Run two workload models with **./epebench -m vidplay gzip -n 4 -a 4 -u 30 90 -t 20**
+Run two workload models with ``./epebench -m vidplay gzip -n 4 -a 4 -u 30 90 -t 20``
 
 Manual
 -------
