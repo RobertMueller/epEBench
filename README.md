@@ -24,7 +24,7 @@ In order to run certain operations as workload, refer to **ebmodels.ini** file.
 
 Compilation
 -------
-Compile epEBench with ``make -f makefile_arm`` for armv7 systems or ``make -f makefile_arm`` for x86_64 ISA
+Compile epEBench with ``make -f makefile_arm`` for armv7 systems or ``make -f makefile_intel`` for x86_64 ISA
 Benchmarking
 -------
 Initiate a simple testrun with ``./epebench -m vidplay -a 3 -n 4 -u 30 -t 20``
