@@ -12,7 +12,7 @@ LD = g++
 WINDRES = windres
 
 INC = 
-CFLAGS = -W -fexceptions
+CFLAGS = -w -fexceptions
 RESINC = 
 LIBDIR = 
 LIB = -pthread

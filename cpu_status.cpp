@@ -2,7 +2,7 @@
  * PROJECT      epEBench - Enhanced Parametrizable Energy Benchmark
  * FILE NAME    cpu_status.cpp
  * INSTITUTION  Fernuni Hagen
- * REVISION     1.0.3
+ * REVISION     1.0
  * PREFIX
  * DESCRIPTION  reads out various CPU stats, as CPU load ...
  * CREATED      06-March-16, Robert Mueller
@@ -13,8 +13,8 @@
  *-------------------------------------------------------------------
  * LICENSE      BSD-3
  *
- * Copyright (c) 2016, Robert Müller. All rights reserved.			  
- * Copyright (c) 2016, Fernuniversität in Hagen. All rights reserved.		  
+ * Copyright (c) 2016, Robert Müller. All rights reserved.
+ * Copyright (c) 2016, Fernuniversität in Hagen. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -154,7 +154,7 @@ void *cpu_usage(void *dat_ptr){
 
         if (!cnt--) {
             cnt = DISPLCNT0;
-            printf("\n\033[1Acpu usage [%5.2f% %/ %5.2f%]  cpu usage max [%5.2f%]  cpu usage min [%5.2f%]", 100*sum_tmp/(cnt+1), cpu_mean*100, stat0.cpu_usage_max*100, stat0.cpu_usage_min*100);
+            printf("\n\033[1Acpu usage [%5.2f% / %5.2f%]  cpu usage max [%5.2f%]  cpu usage min [%5.2f%]", 100*sum_tmp/(cnt+1), cpu_mean*100, stat0.cpu_usage_max*100, stat0.cpu_usage_min*100);
             logfile << time << "\t" << cpu_usage_avg << "\t" << cpu_mean << "\n";
             time += 0.2 * DISPLCNT0;
             sum_tmp = 0.0;

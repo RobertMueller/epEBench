@@ -12,7 +12,7 @@ LD = g++
 WINDRES = windres
 
 INC = 
-CFLAGS = -W -mfpu=neon -D_PIN_CORE -D_CPULOAD_CNTR
+CFLAGS = -w -mfpu=neon -D_PIN_CORE -D_CPULOAD_CNTR
 RESINC = 
 LIBDIR = 
 LIB = -pthread 

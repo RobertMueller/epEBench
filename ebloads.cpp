@@ -2,7 +2,7 @@
  * PROJECT      epEBench - enhanced parametrizable Energy Benchmark
  * FILE NAME    ebloads.cpp
  * INSTITUTION  Fernuni Hagen
- * REVISION     1.0.3
+ * REVISION     1.0.4
  * PREFIX
  * DESCRIPTION  benchmark loads
  * CREATED      06-March-16, Robert Mueller
@@ -13,8 +13,8 @@
  *-------------------------------------------------------------------
  * LICENSE      BSD-3
  *
- * Copyright (c) 2016, Robert Müller. All rights reserved.			  
- * Copyright (c) 2016, Fernuniversität in Hagen. All rights reserved.		  
+ * Copyright (c) 2016, Robert Müller. All rights reserved.
+ * Copyright (c) 2016, Fernuniversität in Hagen. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -355,16 +355,6 @@ void *run_dmem64_SIMD(int counts) {
         vec1 = _mm_load_pd(&A[idx]);
         vec1 = _mm_load_pd(&A[idx]);
         vec1 = _mm_load_pd(&A[idx]);
-        vec1 = _mm_load_pd(&A[idx]);
-        vec1 = _mm_load_pd(&A[idx]);
-        vec1 = _mm_load_pd(&A[idx]);
-        vec1 = _mm_load_pd(&A[idx]);
-        vec1 = _mm_load_pd(&A[idx]);
-        vec1 = _mm_load_pd(&A[idx]);
-        vec1 = _mm_load_pd(&A[idx]);
-        vec1 = _mm_load_pd(&A[idx]);
-        vec1 = _mm_load_pd(&A[idx]);
-        vec1 = _mm_load_pd(&A[idx]);
     }
     return NULL;
 }
@@ -381,16 +371,6 @@ void *run_smem32_SIMD(int counts) {
 
         idx = (idx + 14564) % MEM_SIZE-10;
 
-        vec1 = _mm_load_ps(&A[idx]);
-        vec1 = _mm_load_ps(&A[idx]);
-        vec1 = _mm_load_ps(&A[idx]);
-        vec1 = _mm_load_ps(&A[idx]);
-        vec1 = _mm_load_ps(&A[idx]);
-        vec1 = _mm_load_ps(&A[idx]);
-        vec1 = _mm_load_ps(&A[idx]);
-        vec1 = _mm_load_ps(&A[idx]);
-        vec1 = _mm_load_ps(&A[idx]);
-        vec1 = _mm_load_ps(&A[idx]);
         vec1 = _mm_load_ps(&A[idx]);
         vec1 = _mm_load_ps(&A[idx]);
         vec1 = _mm_load_ps(&A[idx]);
@@ -649,29 +629,29 @@ void* run_ssub32_SIMD(int counts) {
         while ((counts--) && !done0) {
             asm volatile (
                         "vsub.f32    s0, s1\n"
+                        "vsub.f32    s1, s1\n"
+                        "vsub.f32    s3, s1\n"
+                        "vsub.f32    s4, s1\n"
+                        "vsub.f32    s5, s1\n"
                         "vsub.f32    s0, s1\n"
+                        "vsub.f32    s1, s1\n"
+                        "vsub.f32    s2, s1\n"
+                        "vsub.f32    s3, s1\n"
+                        "vsub.f32    s4, s1\n"
+                        "vsub.f32    s5, s1\n"
                         "vsub.f32    s0, s1\n"
+                        "vsub.f32    s1, s1\n"
+                        "vsub.f32    s2, s1\n"
+                        "vsub.f32    s3, s1\n"
+                        "vsub.f32    s4, s1\n"
+                        "vsub.f32    s5, s1\n"
                         "vsub.f32    s0, s1\n"
-                        "vsub.f32    s0, s1\n"
-                        "vsub.f32    s0, s1\n"
-                        "vsub.f32    s0, s1\n"
-                        "vsub.f32    s0, s1\n"
-                        "vsub.f32    s0, s1\n"
-                        "vsub.f32    s0, s1\n"
-                        "vsub.f32    s0, s1\n"
-                        "vsub.f32    s0, s1\n"
-                        "vsub.f32    s0, s1\n"
-                        "vsub.f32    s0, s1\n"
-                        "vsub.f32    s0, s1\n"
-                        "vsub.f32    s0, s1\n"
-                        "vsub.f32    s0, s1\n"
-                        "vsub.f32    s0, s1\n"
-                        "vsub.f32    s0, s1\n"
-                        "vsub.f32    s0, s1\n"
+                        "vsub.f32    s1, s1\n"
+                        "vsub.f32    s2, s1\n"
 
                         : // no output
                         :  // no input
-                        : "memory", "s0", "s1" //clobber
+                        : "memory", "s0", "s1" , "s2" , "s3" , "s4" , "s5 "//clobber
                         );
         }
         return NULL;
@@ -684,29 +664,29 @@ void* run_dsub64_SIMD(int counts) {
         while ((counts--) && !done0) {
             asm volatile (
                         "vsub.f64    d0, d1\n"
+                        "vsub.f64    d1, d1\n"
+                        "vsub.f64    d2, d1\n"
+                        "vsub.f64    d3, d1\n"
+                        "vsub.f64    d4, d1\n"
                         "vsub.f64    d0, d1\n"
+                        "vsub.f64    d1, d1\n"
+                        "vsub.f64    d2, d1\n"
+                        "vsub.f64    d3, d1\n"
+                        "vsub.f64    d4, d1\n"
                         "vsub.f64    d0, d1\n"
+                        "vsub.f64    d1, d1\n"
+                        "vsub.f64    d2, d1\n"
+                        "vsub.f64    d3, d1\n"
+                        "vsub.f64    d4, d1\n"
                         "vsub.f64    d0, d1\n"
-                        "vsub.f64    d0, d1\n"
-                        "vsub.f64    d0, d1\n"
-                        "vsub.f64    d0, d1\n"
-                        "vsub.f64    d0, d1\n"
-                        "vsub.f64    d0, d1\n"
-                        "vsub.f64    d0, d1\n"
-                        "vsub.f64    d0, d1\n"
-                        "vsub.f64    d0, d1\n"
-                        "vsub.f64    d0, d1\n"
-                        "vsub.f64    d0, d1\n"
-                        "vsub.f64    d0, d1\n"
-                        "vsub.f64    d0, d1\n"
-                        "vsub.f64    d0, d1\n"
-                        "vsub.f64    d0, d1\n"
-                        "vsub.f64    d0, d1\n"
-                        "vsub.f64    d0, d1\n"
+                        "vsub.f64    d1, d1\n"
+                        "vsub.f64    d2, d1\n"
+                        "vsub.f64    d3, d1\n"
+                        "vsub.f64    d4, d1\n"
 
                         : // no output
                         :  // no input
-                        : "memory", "d0", "d1" //clobber
+                        : "memory", "d0", "d1","d2","d3","d4" //clobber
                         );
         }
         return NULL;
@@ -720,11 +700,12 @@ void* run_dmem64_SIMD(int counts) {
 
 	volatile double *a = dmemBuf;
 	volatile double *b = dmemBuf;
-	unsigned int idx = 0;
+	unsigned short idx = 0;
 
         instcnt += counts*CNT_DIV;
         while ((counts--) && !done0) {
-            idx = (idx + 14564) % MEM_SIZE-10;   // provoke many cache misses
+
+            idx++;
             asm volatile (
                         "vldr    d0, [%0, #0*8]\n"
                         "vldr    d1, [%0, #1*8]\n"
@@ -762,11 +743,11 @@ void* run_smem32_SIMD(int counts) {
 
 	float *a = (float*)fmemBuf;
 	float *b = (float*)fmemBuf;
-	int idx = 0;
+	unsigned short idx = 0;
 
         instcnt += counts*CNT_DIV;
         while ((counts--) && !done0) {
-            idx = (idx + 14564) % MEM_SIZE-10;   // provoke many cache misses
+            idx++;
             asm volatile (
                         "vldr    s0, [%0, #0*4]\n"
                         "vldr    s1, [%0, #1*4]\n"
@@ -803,25 +784,25 @@ void* run_vmov_SIMD(int counts) {
         while ((counts--) && !done0) {
             asm volatile (
                         "vmov.f64    d0, d1\n"
-                        "vmov.f64    d1, d0\n"
                         "vmov.f64    d0, d1\n"
-                        "vmov.f64    d1, d0\n"
                         "vmov.f64    d0, d1\n"
-                        "vmov.f64    d1, d0\n"
                         "vmov.f64    d0, d1\n"
-                        "vmov.f64    d1, d0\n"
                         "vmov.f64    d0, d1\n"
-                        "vmov.f64    d1, d0\n"
                         "vmov.f64    d0, d1\n"
-                        "vmov.f64    d1, d0\n"
                         "vmov.f64    d0, d1\n"
-                        "vmov.f64    d1, d0\n"
                         "vmov.f64    d0, d1\n"
-                        "vmov.f64    d1, d0\n"
                         "vmov.f64    d0, d1\n"
-                        "vmov.f64    d1, d0\n"
                         "vmov.f64    d0, d1\n"
-                        "vmov.f64    d1, d0\n"
+                        "vmov.f64    d0, d1\n"
+                        "vmov.f64    d0, d1\n"
+                        "vmov.f64    d0, d1\n"
+                        "vmov.f64    d0, d1\n"
+                        "vmov.f64    d0, d1\n"
+                        "vmov.f64    d0, d1\n"
+                        "vmov.f64    d0, d1\n"
+                        "vmov.f64    d0, d1\n"
+                        "vmov.f64    d0, d1\n"
+                        "vmov.f64    d0, d1\n"
                         : // no output
                         :  // no input
                         : "memory", "d0", "d1" //clobber
@@ -910,29 +891,29 @@ void* run_dmul(int counts)
     instcnt += counts*CNT_DIV;
     while ((counts--) && !done0) {
         asm volatile (
-                        "fmuld	d26, d26, d23\n"
-                        "fmuld	d26, d26, d23\n"
-                        "fmuld	d26, d26, d23\n"
-                        "fmuld	d26, d26, d23\n"
-                        "fmuld	d26, d26, d23\n"
-                        "fmuld	d26, d26, d23\n"
-                        "fmuld	d26, d26, d23\n"
-                        "fmuld	d26, d26, d23\n"
-                        "fmuld	d26, d26, d23\n"
-                        "fmuld	d26, d26, d23\n"
-                        "fmuld	d26, d26, d23\n"
-                        "fmuld	d26, d26, d23\n"
-                        "fmuld	d26, d26, d23\n"
-                        "fmuld	d26, d26, d23\n"
-                        "fmuld	d26, d26, d23\n"
-                        "fmuld	d26, d26, d23\n"
-                        "fmuld	d26, d26, d23\n"
-                        "fmuld	d26, d26, d23\n"
-                        "fmuld	d26, d26, d23\n"
-                        "fmuld	d26, d26, d23\n"
+                        "fmuld	d24, d26, d23\n"
+                        "fmuld	d24, d26, d23\n"
+                        "fmuld	d24, d26, d23\n"
+                        "fmuld	d24, d26, d23\n"
+                        "fmuld	d24, d26, d23\n"
+                        "fmuld	d24, d26, d23\n"
+                        "fmuld	d24, d26, d23\n"
+                        "fmuld	d24, d26, d23\n"
+                        "fmuld	d24, d26, d23\n"
+                        "fmuld	d24, d26, d23\n"
+                        "fmuld	d24, d26, d23\n"
+                        "fmuld	d24, d26, d23\n"
+                        "fmuld	d24, d26, d23\n"
+                        "fmuld	d24, d26, d23\n"
+                        "fmuld	d24, d26, d23\n"
+                        "fmuld	d24, d26, d23\n"
+                        "fmuld	d24, d26, d23\n"
+                        "fmuld	d24, d26, d23\n"
+                        "fmuld	d24, d26, d23\n"
+                        "fmuld	d24, d26, d23\n"
                     	: // no output
                         :  // no input
-                        : "memory", "d26", "d23" //clobber
+                        : "memory", "d26", "d23", "d24" //clobber
                         );
 	}
 	return NULL;
@@ -944,29 +925,29 @@ void* run_dadd(int counts)
     instcnt += counts*CNT_DIV;
     while ((counts--) && !done0) {
         asm volatile (
-                        "faddd	d26, d26, d24\n"
-                        "faddd	d26, d26, d24\n"
-                        "faddd	d26, d26, d24\n"
-                        "faddd	d26, d26, d24\n"
-                        "faddd	d26, d26, d24\n"
-                        "faddd	d26, d26, d24\n"
-                        "faddd	d26, d26, d24\n"
-                        "faddd	d26, d26, d24\n"
-                        "faddd	d26, d26, d24\n"
-                        "faddd	d26, d26, d24\n"
-                        "faddd	d26, d26, d24\n"
-                        "faddd	d26, d26, d24\n"
-                        "faddd	d26, d26, d24\n"
-                        "faddd	d26, d26, d24\n"
-                        "faddd	d26, d26, d24\n"
-                        "faddd	d26, d26, d24\n"
-                        "faddd	d26, d26, d24\n"
-                        "faddd	d26, d26, d24\n"
-                        "faddd	d26, d26, d24\n"
-                        "faddd	d26, d26, d24\n"
+                        "faddd	d23, d26, d24\n"
+                        "faddd	d23, d26, d24\n"
+                        "faddd	d23, d26, d24\n"
+                        "faddd	d23, d26, d24\n"
+                        "faddd	d23, d26, d24\n"
+                        "faddd	d23, d26, d24\n"
+                        "faddd	d23, d26, d24\n"
+                        "faddd	d23, d26, d24\n"
+                        "faddd	d23, d26, d24\n"
+                        "faddd	d23, d26, d24\n"
+                        "faddd	d23, d26, d24\n"
+                        "faddd	d23, d26, d24\n"
+                        "faddd	d23, d26, d24\n"
+                        "faddd	d23, d26, d24\n"
+                        "faddd	d23, d26, d24\n"
+                        "faddd	d23, d26, d24\n"
+                        "faddd	d23, d26, d24\n"
+                        "faddd	d23, d26, d24\n"
+                        "faddd	d23, d26, d24\n"
+                        "faddd	d23, d26, d24\n"
                     	: // no output
                         :  // no input
-                        : "memory", "d26", "d24" //clobber
+                        : "memory", "d26", "d24", "d23" //clobber
                         );
 	}
 	return NULL;
@@ -978,29 +959,29 @@ void* run_imul(int counts)
     instcnt += counts*CNT_DIV;
     while ((counts--) && !done0) {
 	asm volatile (
-                        "mul	r3, r3, r2\n"
-                        "mul	r3, r3, r2\n"
-                        "mul	r3, r3, r2\n"
-                        "mul	r3, r3, r2\n"
-                        "mul	r3, r3, r2\n"
-                        "mul	r3, r3, r2\n"
-                        "mul	r3, r3, r2\n"
-                        "mul	r3, r3, r2\n"
-                        "mul	r3, r3, r2\n"
-                        "mul	r3, r3, r2\n"
-                        "mul	r3, r3, r2\n"
-                        "mul	r3, r3, r2\n"
-                        "mul	r3, r3, r2\n"
-                        "mul	r3, r3, r2\n"
-                        "mul	r3, r3, r2\n"
-                        "mul	r3, r3, r2\n"
-                        "mul	r3, r3, r2\n"
-                        "mul	r3, r3, r2\n"
-                        "mul	r3, r3, r2\n"
-                        "mul	r3, r3, r2\n"
+                        "mul	r4, r3, r2\n"
+                        "mul	r4, r3, r2\n"
+                        "mul	r4, r3, r2\n"
+                        "mul	r4, r3, r2\n"
+                        "mul	r4, r3, r2\n"
+                        "mul	r4, r3, r2\n"
+                        "mul	r4, r3, r2\n"
+                        "mul	r4, r3, r2\n"
+                        "mul	r4, r3, r2\n"
+                        "mul	r4, r3, r2\n"
+                        "mul	r4, r3, r2\n"
+                        "mul	r4, r3, r2\n"
+                        "mul	r4, r3, r2\n"
+                        "mul	r4, r3, r2\n"
+                        "mul	r4, r3, r2\n"
+                        "mul	r4, r3, r2\n"
+                        "mul	r4, r3, r2\n"
+                        "mul	r4, r3, r2\n"
+                        "mul	r4, r3, r2\n"
+                        "mul	r4, r3, r2\n"
                     	: // no output
                         :  // no input
-                        : "memory", "r3", "r2" //clobber
+                        : "memory", "r3", "r2", "r4" //clobber
                         );
 	}
 	return NULL;
@@ -1012,29 +993,29 @@ void* run_iadd(int counts)
     instcnt += counts*CNT_DIV;
     while ((counts--) && !done0) {
         asm volatile (
-                        "add	r2, r2, #1\n"
-                        "add	r2, r2, #1\n"
-                        "add	r2, r2, #1\n"
-                        "add	r2, r2, #1\n"
-                        "add	r2, r2, #1\n"
-                        "add	r2, r2, #1\n"
-                        "add	r2, r2, #1\n"
-                        "add	r2, r2, #1\n"
-                        "add	r2, r2, #1\n"
-                        "add	r2, r2, #1\n"
-                        "add	r2, r2, #1\n"
-                        "add	r2, r2, #1\n"
-                        "add	r2, r2, #1\n"
-                        "add	r2, r2, #1\n"
-                        "add	r2, r2, #1\n"
-                        "add	r2, r2, #1\n"
-                        "add	r2, r2, #1\n"
-                        "add	r2, r2, #1\n"
-                        "add	r2, r2, #1\n"
-                        "add	r2, r2, #1\n"
+                        "add	r3, r2, #1\n"
+                        "add	r3, r2, #1\n"
+                        "add	r3, r2, #1\n"
+                        "add	r3, r2, #1\n"
+                        "add	r3, r2, #1\n"
+                        "add	r3, r2, #1\n"
+                        "add	r3, r2, #1\n"
+                        "add	r3, r2, #1\n"
+                        "add	r3, r2, #1\n"
+                        "add	r3, r2, #1\n"
+                        "add	r3, r2, #1\n"
+                        "add	r3, r2, #1\n"
+                        "add	r3, r2, #1\n"
+                        "add	r3, r2, #1\n"
+                        "add	r3, r2, #1\n"
+                        "add	r3, r2, #1\n"
+                        "add	r3, r2, #1\n"
+                        "add	r3, r2, #1\n"
+                        "add	r3, r2, #1\n"
+                        "add	r3, r2, #1\n"
                     	: // no output
                         :  // no input
-                        : "memory", "r2" //clobber
+                        : "memory", "r2", "r3" //clobber
                         );
 	}
 	return NULL;
@@ -1044,30 +1025,30 @@ void* run_iadd(int counts)
 //foo 11
 void* run_dmul(int counts)
  {
-    volatile double x = 1.123;
+    volatile double x = 1.123, y = 0.23, z = 6.32;
 
     instcnt += counts*CNT_DIV;
     while ((counts--) && !done0) {
 		x*=1.121;
-		x*=1.122;
-		x*=1.123;
+		y*=1.122;
+		z*=1.123;
 		x*=1.124;
-		x*=1.125;
-		x*=1.126;
+		y*=1.125;
+		z*=1.126;
 		x*=1.127;
-		x*=1.128;
-		x*=1.129;
+		y*=1.128;
+		z*=1.129;
 		x*=1.120;
-		x*=1.121;
-		x*=1.122;
+		y*=1.121;
+		z*=1.122;
 		x*=1.123;
-		x*=1.124;
-		x*=1.125;
+		y*=1.124;
+		z*=1.125;
 		x*=1.126;
-		x*=1.127;
-		x*=1.128;
+		y*=1.127;
+		z*=1.128;
 		x*=1.129;
-		x*=1.120;
+		y*=1.120;
 	}
 	return NULL;
  }
@@ -1075,30 +1056,30 @@ void* run_dmul(int counts)
 //foo 12
 void* run_dadd(int counts)
  {
-    volatile double x = 3.21;
+    volatile double x = 3.21, y = 0.2, z = 1.34;
 
     instcnt += counts*CNT_DIV;
     while ((counts--) && !done0) {
 		x+=1.121;
-		x+=1.122;
-		x+=1.123;
+		y+=1.122;
+		z+=1.123;
 		x+=1.124;
-		x+=1.125;
-		x+=1.126;
+		y+=1.125;
+		z+=1.126;
 		x+=1.127;
-		x+=1.128;
-		x+=1.129;
+		y+=1.128;
+		z+=1.129;
 		x+=1.120;
-		x+=1.121;
-		x+=1.122;
+		y+=1.121;
+		z+=1.122;
 		x+=1.123;
-		x+=1.124;
-		x+=1.125;
+		y+=1.124;
+		z+=1.125;
 		x+=1.126;
-		x+=1.127;
-		x+=1.128;
+        y+=1.127;
+		z+=1.128;
 		x+=1.129;
-		x+=1.120;
+		y+=1.120;
 	}
 	return NULL;
  }
@@ -1106,30 +1087,30 @@ void* run_dadd(int counts)
 //foo 13
 void* run_imul(int counts)
  {
-    volatile int x = 2;
+    volatile int x = 2, y = 1, z = 3;
 
     instcnt += counts*CNT_DIV;
     while ((counts--) && !done0) {
 		x*=2;
-		x*=8;
-		x*=7;
+		y*=8;
+		z*=7;
 		x*=6;
-		x*=5;
-		x*=6;
+		y*=5;
+		z*=6;
 		x*=7;
+		y*=3;
+		z*=2;
 		x*=3;
+        y*=2;
+		z*=8;
+		x*=7;
+		y*=6;
+		z*=5;
+		x*=6;
+		y*=7;
+		z*=3;
 		x*=2;
-		x*=3;
-        x*=2;
-		x*=8;
-		x*=7;
-		x*=6;
-		x*=5;
-		x*=6;
-		x*=7;
-		x*=3;
-		x*=2;
-		x*=3;
+		y*=3;
 	}
 	return NULL;
  }
@@ -1137,30 +1118,30 @@ void* run_imul(int counts)
 //foo 14
 void* run_iadd(int counts)
  {
-    volatile int x = 0;
+    volatile int x = 0, y = 1, z = 3;
 
     instcnt += counts*CNT_DIV;
     while ((counts--) && !done0) {
 		x+=1;
-		x+=2;
-		x+=3;
+		y+=2;
+		z+=3;
 		x+=4;
-		x+=5;
-		x+=6;
+		y+=5;
+		z+=6;
 		x+=7;
-		x+=8;
-		x+=9;
+		y+=8;
+		z+=9;
 		x+=10;
-        x+=1;
-		x+=2;
+        y+=1;
+		z+=2;
 		x+=3;
-		x+=4;
-		x+=5;
+		y+=4;
+		z+=5;
 		x+=6;
-		x+=7;
-		x+=8;
+		y+=7;
+		z+=8;
 		x+=9;
-		x+=10;
+		y+=10;
 	}
 	return NULL;
  }
@@ -1241,28 +1222,28 @@ void* run_logic(int counts)
     while ((counts--) && !done0) {
         asm volatile (
                         "and	r3, r3, #1\n"
-                        "orr	r3, r3, #4\n"
-                        "and	r3, r3, #15\n"
+                        "orr	r4, r4, #4\n"
+                        "and	r5, r5, #15\n"
+                        "orr	r6, r6, #255\n"
+                        "and	r7, r7, #1\n"
+                        "orr	r8, r8, #4\n"
+                        "and	r9, r9, #15\n"
                         "orr	r3, r3, #255\n"
-                        "and	r3, r3, #1\n"
-                        "orr	r3, r3, #4\n"
-                        "and	r3, r3, #15\n"
+                        "and	r4, r5, #1\n"
+                        "orr	r6, r7, #4\n"
+                        "and	r8, r9, #15\n"
                         "orr	r3, r3, #255\n"
-                        "and	r3, r3, #1\n"
-                        "orr	r3, r3, #4\n"
+                        "and	r4, r4, #1\n"
+                        "orr	r5, r5, #4\n"
+                        "and	r6, r6, #15\n"
+                        "orr	r7, r7, #255\n"
+                        "and	r8, r8, #1\n"
+                        "orr	r9, r9, #4\n"
                         "and	r3, r3, #15\n"
-                        "orr	r3, r3, #255\n"
-                        "and	r3, r3, #1\n"
-                        "orr	r3, r3, #4\n"
-                        "and	r3, r3, #15\n"
-                        "orr	r3, r3, #255\n"
-                        "and	r3, r3, #1\n"
-                        "orr	r3, r3, #4\n"
-                        "and	r3, r3, #15\n"
-                        "orr	r3, r3, #255\n"
+                        "orr	r4, r4, #255\n"
                     	: // no output
                         :  // no input
-                        : "memory", "r3" //clobber
+                        : "memory", "r3", "r4", "r5", "r6", "r7", "r8", "r9" //clobber
                         );
     }
 	return NULL;
@@ -1372,14 +1353,14 @@ void* __attribute__((optimize("O0"))) run_branch(int counts)
 // generates 10x ldr + str instructions
 void* run_imem(int counts)
 {
-//    int x[20];
-//    volatile int y[20];
-    int index = 0;
+    int a;
+    //volatile int y[20];
+    unsigned short index = 0;
     instcnt += counts*CNT_DIV;
 
     while ((counts--) && !done0) {
 
-        index = (index + 14564) % MEM_SIZE;
+        index++;
         imemBuf[index] = imemBuf[index];
         imemBuf[index] = imemBuf[index];
         imemBuf[index] = imemBuf[index];
@@ -1390,6 +1371,7 @@ void* run_imem(int counts)
         imemBuf[index] = imemBuf[index];
         imemBuf[index] = imemBuf[index];
         imemBuf[index] = imemBuf[index];
+
 	}
 	return NULL;
 }
@@ -1398,6 +1380,9 @@ void* run_imem(int counts)
 // generates 10x ldrd + strd instructions
 void* run_dmem(int counts)
 {
+    // use this function, if heavy cache misses are required
+    // which lead to "real" memory access
+
 //    volatile double x[20];
 //    volatile double y;
     int index = 0;
@@ -1436,7 +1421,7 @@ void* run_imov(int counts)
                         "movs    r0, #6\n"
                         "movs    r0, #7\n"
                         "movs    r0, #8\n"
-                        "movs    r1, r0\n"
+                        "movs    r0, r1\n"
                         "movs    r0, #10\n"
                         "movs    r0, #11\n"
                         "movs    r0, #12\n"
@@ -1500,25 +1485,25 @@ void *run_shift(int counts)
     while ((counts--) && !done0) {
         asm volatile (
                         "lsr    r0, r1, #1\n"
-                        "lsr    r1, r0, #1\n"
                         "lsr    r0, r1, #1\n"
-                        "lsr    r1, r0, #1\n"
                         "lsr    r0, r1, #1\n"
-                        "lsr    r1, r0, #1\n"
                         "lsr    r0, r1, #1\n"
-                        "lsr    r1, r0, #1\n"
                         "lsr    r0, r1, #1\n"
-                        "lsr    r1, r0, #1\n"
                         "lsr    r0, r1, #1\n"
-                        "lsr    r1, r0, #1\n"
                         "lsr    r0, r1, #1\n"
-                        "lsr    r1, r0, #1\n"
                         "lsr    r0, r1, #1\n"
-                        "lsr    r1, r0, #1\n"
+                        "lsr    r0, r1, #1\n"
+                        "lsr    r0, r1, #1\n"
+                        "lsr    r0, r1, #1\n"
+                        "lsr    r0, r1, #1\n"
+                        "lsr    r0, r1, #1\n"
+                        "lsr    r0, r1, #1\n"
+                        "lsr    r0, r1, #1\n"
+                        "lsr    r0, r1, #1\n"
                         "asrs   r0, r1, #1\n"
-                        "asrs   r1, r0, #1\n"
                         "asrs   r0, r1, #1\n"
-                        "asrs   r1, r0, #1\n"
+                        "asrs   r0, r1, #1\n"
+                        "asrs   r0, r1, #1\n"
                         : // no output
                         :  // no input
                         : "memory", "r0", "r1" //clobber

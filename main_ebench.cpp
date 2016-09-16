@@ -2,7 +2,7 @@
  * PROJECT      epEBench - Enhanced Parametrizable Energy Benchmark
  * FILE NAME    main_ebench.cpp
  * INSTITUTION  Fernuni Hagen
- * REVISION     1.0.3
+ * REVISION     1.0.4
  * PREFIX
  * DESCRIPTION  Freely configurable Energy Benchmark for multicore ARM based embedded systems.
  *
@@ -16,8 +16,8 @@
  *-------------------------------------------------------------------
  * LICENSE      BSD-3
  *
- * Copyright (c) 2016, Robert Müller. All rights reserved.			  
- * Copyright (c) 2016, Fernuniversität in Hagen. All rights reserved.		  
+ * Copyright (c) 2016, Robert Müller. All rights reserved.
+ * Copyright (c) 2016, Fernuniversität in Hagen. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -69,7 +69,7 @@
 
 #define VERSION_MAJOR 1
 #define VERSION_MINOR 0
-#define VERSION_REV 3
+#define VERSION_REV 4
 #define VERSION_DATE __DATE__
 #define VERSION_TIME __TIME__
 #define STATUS "      "
@@ -123,7 +123,7 @@ void print_help(void) {
             "aspect of the workload on the CPU\n\n");
 	printf("Options:\n");
 	printf("\t-t T1 {T2...Tn}\t\tTime in seconds\n\t\t\t\tOpt: Enter a list used as test pattern (use -p)\n");
-	printf("\t-m MD1 {MD2...MDn}\tModel(s) to execute\n");
+	printf("\t-m MD1 {MD2...MDn}\tModel(s) to execute (e.g. vidplay, gzip [Note-4])\n");
 	printf("\t-n N {N1...Nn}\t\tNumber of threads to allocate\n\t\t\t\tOpt: Enter a list used as test pattern (use -p)\n");
 	printf("\t-u U {U1...Un}\t\tCPU-load setting (0 - 100)[%].\n\t\t\t\tOpt1: Enter a list used as test pattern (use -p)\n");
 	printf("\t\t\t\tOpt2: List of CPU-loads per thread (normal mode)\n");
@@ -134,9 +134,10 @@ void print_help(void) {
 	printf("\t-r \t\t\tEnable thread pinning mode\n");
 	printf("\t-h \t\t\tShow this help message\n");
 	printf("\t-v \t\t\tShow version\n\n");
-	printf("Note-1: List of elements in test pattern mode loops cyclically until last element of longest list is reached.\nMeans, amount of testruns is defined by longest parameter list.\n\n");
-	printf("Note-2: If no option is passed, benchmark starts with default values.\n\n");
-	printf("Note-3: Thread pinning mode [-r] forces threads bound to assigned CPU but leads to a lower load level accuracy at high thread counts.\n\n");
+	printf("Note-1: List of elements in test pattern mode loops cyclically until last element of longest list is reached.\nMeans, amount of testruns is defined by longest parameter list.\n");
+	printf("Note-2: If no option is passed, benchmark starts with default values.\n");
+	printf("Note-3: Thread pinning mode [-r] forces threads bound to assigned CPU but leads to a lower load level accuracy at high thread counts.\n");
+	printf("Note-4: Refer to ebmodels.ini file for more information and find all available workloads.\n\n");
 	printf("Good luck!\n\n");
 	exit(EXIT_SUCCESS);
 
