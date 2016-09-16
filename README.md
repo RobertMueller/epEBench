@@ -16,9 +16,9 @@ It is capable of:
 
 Two implemented workloads (vidplay and gzip) replicate behavior of real applications in resprect to instruction mix characteristic.
 
-**vidplay**: Emulates video-player workload (QoS type)
+**vidplay**: Emulates multi-threaded video-player workload (QoS type)
 
-**gzip**: Emulates gzip (data de/compression) workload (performance type)
+**gzip**: Emulates single-threaded data de/compression workload (performance type)
 
 In order to run certain operations as workload, refer to **ebmodels.ini** file.
 
@@ -42,7 +42,7 @@ Options:
 
 	-t T1 {T2...Tn}	        Time in seconds
 	                        Opt: Enter a list used as test pattern [-p]
-	-m MD1 {MD2...Mdn}	    Model(s) to execute (see ebmodels.ini)
+	-m MD1 {MD2...Mdn}	    Model(s) to execute (e.g. vidplay, gzip [Note-4])
 	-n N {N1...Nn}	        Number of threads to allocate
 		                    Opt: Enter a list used as test pattern [-p]
 	-u U {U1...Un}	        CPU-load setting (0 – 100)[%]
@@ -58,8 +58,7 @@ Options:
 	
 	
 Note-1: List of elements in test pattern mode loops cyclically until last element of longest list is reached. Means, amount of testruns is defined by longest parameter list.
-
 Note-2: If no option is passed, benchmark starts with default values.
-
 Note-3: Thread pinning mode [-r] forces threads bound to assigned CPU but leads to a lower load level accuracy at high thread counts.
+Note-4: Refer to ebmodels.ini file for more information and find all available workloads.
 
