@@ -651,7 +651,7 @@ void* run_ssub32_SIMD(int counts) {
 
                         : // no output
                         :  // no input
-                        : "memory", "s0", "s1" , "s2" , "s3" , "s4" , "s5 "//clobber
+                        : "memory", "s0", "s1" , "s2" , "s3" , "s4" , "s5"//clobber
                         );
         }
         return NULL;
