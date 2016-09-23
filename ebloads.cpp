@@ -1221,29 +1221,29 @@ void* run_logic(int counts)
 	instcnt += counts*CNT_DIV;
     while ((counts--) && !done0) {
         asm volatile (
-                        "and	r3, r3, #1\n"
-                        "orr	r4, r4, #4\n"
-                        "and	r5, r5, #15\n"
-                        "orr	r6, r6, #255\n"
-                        "and	r7, r7, #1\n"
-                        "orr	r8, r8, #4\n"
-                        "and	r9, r9, #15\n"
-                        "orr	r3, r3, #255\n"
-                        "and	r4, r5, #1\n"
-                        "orr	r6, r7, #4\n"
-                        "and	r8, r9, #15\n"
-                        "orr	r3, r3, #255\n"
-                        "and	r4, r4, #1\n"
-                        "orr	r5, r5, #4\n"
-                        "and	r6, r6, #15\n"
-                        "orr	r7, r7, #255\n"
-                        "and	r8, r8, #1\n"
-                        "orr	r9, r9, #4\n"
-                        "and	r3, r3, #15\n"
-                        "orr	r4, r4, #255\n"
+                        "and	r4, r3, #1\n"
+                        "orr	r4, r3, #4\n"
+                        "and	r4, r3, #15\n"
+                        "orr	r4, r3, #255\n"
+                        "and	r4, r3, #1\n"
+                        "orr	r4, r3, #4\n"
+                        "and	r4, r3, #15\n"
+                        "orr	r4, r3, #255\n"
+                        "and	r4, r3, #1\n"
+                        "orr	r4, r3, #4\n"
+                        "and	r4, r3, #15\n"
+                        "orr	r4, r3, #255\n"
+                        "and	r4, r3, #1\n"
+                        "orr	r4, r3, #4\n"
+                        "and	r4, r3, #15\n"
+                        "orr	r4, r3, #255\n"
+                        "and	r4, r3, #1\n"
+                        "orr	r4, r3, #4\n"
+                        "and	r4, r3, #15\n"
+                        "orr	r4, r3, #255\n"
                     	: // no output
                         :  // no input
-                        : "memory", "r3", "r4", "r5", "r6", "r7", "r8", "r9" //clobber
+                        : "memory", "r3", "r4" //clobber
                         );
     }
 	return NULL;
