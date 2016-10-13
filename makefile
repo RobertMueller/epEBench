@@ -11,8 +11,22 @@ AR = ar
 LD = g++
 WINDRES = windres
 
+ARCH := $(shell arch)
+$(info Processor architecture $(ARCH) detected.)
+
+ifeq ($(ARCH), armv7l)
+  AFLAGS = -mfpu=neon
+else ifeq ($(ARCH), x86_64)
+  AFLAGS =
+else ifeq ($(ARCH), i386)
+  AFLAGS = -Wpsabi -msse4.1
+else
+  AFLAGS = -mfpu=neon -mfloat-abi=softfp
+endif
+
 INC = 
-CFLAGS = -w -mfpu=neon -D_PIN_CORE -D_CPULOAD_CNTR
+CFLAGS = $(AFLAGS) -w -D_PIN_CORE -D_CPULOAD_CNTR
+
 RESINC = 
 LIBDIR = 
 LIB = -pthread 
