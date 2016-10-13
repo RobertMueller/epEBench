@@ -20,6 +20,8 @@ else ifeq ($(ARCH), x86_64)
   AFLAGS =
 else ifeq ($(ARCH), i386)
   AFLAGS = -Wpsabi -msse4.1
+else ifeq ($(ARCH), i686)
+  AFLAGS = -Wpsabi -msse4.1
 else
   AFLAGS = -mfpu=neon -mfloat-abi=softfp
 endif
