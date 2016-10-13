@@ -35,7 +35,7 @@
                do { errno = en; perror(msg); exit(EXIT_FAILURE); } while (0)
 */
 
-#if defined (__i686__) || defined (__x86_64__)
+#if defined (__i686__) || defined (__x86_64__) || defined (__i586__)
 #define ARCH_X86
 #include <xmmintrin.h>
 
