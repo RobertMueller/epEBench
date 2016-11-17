@@ -13,6 +13,7 @@ WINDRES = windres
 ARCH := $(shell arch)
 $(info Processor architecture $(ARCH) detected.)
 
+<<<<<<< HEAD
 ifeq ($(ARCH), arm)
   AFLAGS = -mfpu=neon -mfloat-abi=softfp
 else ifeq ($(ARCH), x86_64)
@@ -21,10 +22,26 @@ else ifeq ($(ARCH), i386)
   AFLAGS =
 else
   AFLAGS =
+=======
+ifeq ($(ARCH), armv7l)
+  AFLAGS = -mfpu=neon
+else ifeq ($(ARCH), x86_64)
+  AFLAGS =
+else ifeq ($(ARCH), i386)
+  AFLAGS = -Wpsabi -msse4.1
+else ifeq ($(ARCH), i686)
+  AFLAGS = -Wpsabi -msse4.1
+else
+  AFLAGS = -mfpu=neon -mfloat-abi=softfp
+>>>>>>> bf53b95918880f136cd4ccaa73b5b322c70f0953
 endif
 
 INC = 
 CFLAGS = $(AFLAGS) -w -D_PIN_CORE -D_CPULOAD_CNTR
+<<<<<<< HEAD
+=======
+
+>>>>>>> bf53b95918880f136cd4ccaa73b5b322c70f0953
 RESINC = 
 LIBDIR = 
 LIB = -pthread
