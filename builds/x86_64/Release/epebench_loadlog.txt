@@ -1,0 +1,7 @@
+# Testrun settings:
+#   Model   : vidplay
+#   Cpu#    : 4
+#   Thread# : 4
+time	usage	avg_usage
+0	0.1519	0.4346
+
