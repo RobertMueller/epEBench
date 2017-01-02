@@ -13,8 +13,8 @@
  *-------------------------------------------------------------------
  * LICENSE      BSD-3
  *
- * Copyright (c) 2016, Robert Müller. All rights reserved.			  
- * Copyright (c) 2016, Fernuniversität in Hagen. All rights reserved.		  
+ * Copyright (c) 2016, Robert Müller. All rights reserved.
+ * Copyright (c) 2016, Fernuniversität in Hagen. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -39,17 +39,17 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * -------------------------------------------------------------------*/
 
-#include "globals.h"
+#include "globals.h
 
 volatile int done0;
 volatile int threads;
 volatile double cpu_usage_avg, cpu_mean;
 volatile float tot_usage, k_cpu;
 volatile double instcnt, max_instcnt;
-//volatile int usedCpu, numCpu, thrcnt;
 volatile int imemBuf[MEM_SIZE];
 volatile double dmemBuf[MEM_SIZE];
 volatile float fmemBuf[MEM_SIZE];
+volatile double facUsage;
 
 
 

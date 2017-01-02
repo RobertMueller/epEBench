@@ -11,7 +11,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="-m vidplay -r -u 110" />
+				<Option parameters="-m vidplay -u 50 10 30 100 30 -t 2 1 5 2 7 -l" />
 				<Compiler>
 					<Add option="-g" />
 					<Add option="-D_DEBUG" />
@@ -24,7 +24,7 @@
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="-m vidplay -n 4 -a 4 -u 70 -r" />
+				<Option parameters="-m vidplay -u 50 10 30 100 30 -t 2 0.4 5 0.6 7 -l 5" />
 				<Compiler>
 					<Add option="-D_PIN_CORE" />
 					<Add option="-D_CPULOAD_CNTR" />

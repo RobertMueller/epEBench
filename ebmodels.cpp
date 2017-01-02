@@ -13,8 +13,8 @@
  *-------------------------------------------------------------------
  * LICENSE      BSD-3
  *
- * Copyright (c) 2016, Robert Müller. All rights reserved.			  
- * Copyright (c) 2016, Fernuniversität in Hagen. All rights reserved.		  
+ * Copyright (c) 2016, Robert Müller. All rights reserved.
+ * Copyright (c) 2016, Fernuniversität in Hagen. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -291,7 +291,7 @@ void* ebmodel(void* ptr) {
                     e1 = tot_usage - cpu_usage_avg;
                     esum1 += e1;
                     k_cpu = (KP1*e1 + KI1*esum1);
-                    if (target_usage + k_cpu < 0.01) k_cpu = 0.01 - target_usage; // limit to min 1% CPU load
+                    if (target_usage*facUsage + k_cpu < 0.01) k_cpu = 0.01 - target_usage*facUsage; // limit to min 1% CPU load
 #ifdef _DEBUG
                     outstrcpu << stime+rtime << "\t" << k_cpu << "\t" << tot_usage << "\t" << cpu_usage_avg << "\n";
 #endif // DEBUG
@@ -314,7 +314,7 @@ void* ebmodel(void* ptr) {
 
                 gettimeofday(&t1, NULL);        // finish time
                 rtime = ((t1.tv_sec - t0.tv_sec)*1000000 + t1.tv_usec-t0.tv_usec);
-                stime = rtime*(1/(target_usage + k_cpu) - 1);
+                stime = rtime*(1/(target_usage*facUsage + k_cpu) - 1);
                 if (stime > STIME_MAX) stime = STIME_MAX;
                 else if (stime < 0) stime = 0;
                 usleep((int)(stime));

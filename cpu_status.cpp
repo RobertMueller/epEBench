@@ -154,8 +154,8 @@ void *cpu_usage(void *dat_ptr){
 
         if (!cnt--) {
             cnt = DISPLCNT0;
-            printf("\n\033[1Acpu usage [%5.2f% / %5.2f%]  cpu usage max [%5.2f%]  cpu usage min [%5.2f%]", 100*sum_tmp/(cnt+1), cpu_mean*100, stat0.cpu_usage_max*100, stat0.cpu_usage_min*100);
-            logfile << time << "\t" << cpu_usage_avg << "\t" << cpu_mean << "\n";
+            printf("\n\033[1Acpu usage [%5.2f% / %5.2f%]  max [%5.2f%]  min [%5.2f%]", 100*sum_tmp/(cnt+1), cpu_mean*100, stat0.cpu_usage_max*100, stat0.cpu_usage_min*100);
+	    logfile << time << "\t" << cpu_usage_avg << "\t" << cpu_mean << "\n";
             time += 0.2 * DISPLCNT0;
             sum_tmp = 0.0;
 

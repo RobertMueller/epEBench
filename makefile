@@ -15,15 +15,15 @@ ARCH := $(shell arch)
 $(info Processor architecture $(ARCH) detected.)
 
 ifeq ($(ARCH), armv7l)
-  AFLAGS = -mfpu=neon
+	AFLAGS = -mfpu=neon
 else ifeq ($(ARCH), x86_64)
-  AFLAGS =
+	AFLAGS =
 else ifeq ($(ARCH), i386)
-  AFLAGS = -Wpsabi -msse4.1
+	AFLAGS = -Wpsabi -msse4.1
 else ifeq ($(ARCH), i686)
-  AFLAGS = -Wpsabi -msse4.1
+	AFLAGS = -Wpsabi -msse4.1
 else
-  AFLAGS = -mfpu=neon -mfloat-abi=softfp
+	AFLAGS = -mfpu=neon -mfloat-abi=softfp
 endif
 
 INC = 
