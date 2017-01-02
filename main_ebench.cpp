@@ -319,7 +319,7 @@ int main (int argc, char **argv)
 	}
     else if (loop_mode) {
 		printf("=> Loop mode activated.\n");
-		strcpy(var_str,"(var)");
+		strcpy(var_str,"(avg)");
 		}
 
         //************ start benchmark ***********************************************
@@ -468,6 +468,19 @@ int main (int argc, char **argv)
             s = pthread_getaffinity_np(thread[i], sizeof(cpu_set_t), &cpuset);             // get CPU affinity of thread i
             if (s != 0) handle_error_en(s, "pthread_getaffinity_np");
         }
+		
+		// recalculate average total usage if load profiles to run in loop mode
+		double sum_tim = 0.0;
+		if (loop_mode) {
+			tot_usage = 0;
+			for (i=0; i < max_runs; i++) {
+				tot_usage += (runtime[i%t_cnt]*usage[i%u_cnt]);
+				sum_tim += runtime[i%t_cnt];
+			}
+			tot_usage /= sum_tim;
+			sum_tim *= loops;				
+		}
+		else sum_tim = runtime[testrun%t_cnt];				
 
         printf("\nInitial settings:\n");
         printf("    CPU load:   %2.0f%% %s\n", tot_usage * 100, var_str);
@@ -478,7 +491,7 @@ int main (int argc, char **argv)
         int m = m_cnt;
         while (m--) printf("%s ",param[m]->modelName);
         printf("\n");
-        if (!max_instcnt) printf("    runtime :   %2.1fs %s\n", runtime[testrun%t_cnt], var_str);
+        if (!max_instcnt) printf("    runtime :   %2.1fs\n", sum_tim);
         else printf("    Inst count: %.0lf Mio\n", max_instcnt);
 
         float k=0;
@@ -488,9 +501,13 @@ int main (int argc, char **argv)
                 i = thrcnt;
                 k = 0;
                 if (CPU_ISSET(j, &cpuset)) {
-                    do {
-                        if (param[i]->cpu == j) k += param[i]->usage;
-                    } while (i--);
+					if (loop_mode) k = tot_usage * numCpu/usedCpu;                    
+					else
+					{					
+						do {
+                    	    if (param[i]->cpu == j) k += param[i]->usage;
+                    	} while (i--);
+					}
                     if (k > 1) k = 1;
                     printf("    CPU %d:      %2.1f%% %s\n", j, k*100, var_str);
                 }
