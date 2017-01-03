@@ -64,7 +64,7 @@ Options:
 		                    Opt2: List of CPU-loads per thread (normal)
 	-a CPU {CPU1...CPUn}	CPU affinity; amount or list of used cores
 	-i N	                Maximum No. of instructions in Mio
-	-l N			Loop mode [Note-4]. No. of load profile loops
+	-l N					Loop mode [Note-4]. No. of load profile loops
 	-d	                    CPU-usage process disable. Secondary load controller will not be working
 	-p	                    Test pattern mode
 	-r	                    Enable thread pinning mode
