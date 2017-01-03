@@ -7,7 +7,7 @@
  * DESCRIPTION  Freely configurable Energy Benchmark for multicore ARM based embedded systems.
  *
  * CREATED      13-Aug-16, Robert Mueller
- * MODIFIED     17-Dec-16, Robert Mueller
+ * MODIFIED     03-Jan-17, Robert Mueller
  *
  * HISTORY      1.0.0 : created
  *              1.0.1
@@ -15,11 +15,18 @@
  *              1.0.3
  *              1.0.4 : minor fixes
  *              1.1.0 : runtime entry now with floating point
- *			loop mode added: runs load setpoints in a loop
+ *			loop mode added: runs specific load setpoints in a loop
+ *		1.1.1 : loop mode modified: profile run with specific inst count target
  *-------------------------------------------------------------------
- * Full Description: EpEBench is capable of creating a realistic workload on a multi-core system,
- *              and can be parametrized in order to stress only a certain aspect of the workload
- *              on the CPU
+ * Full Description: 
+ *		EpEBench is an energy benchmark capable of creating a realistic workload on 
+ *		a multi-core system. It can be widely parametrized in order to stress only a certain 
+ *		aspect of the workload on the CPU. Pre-defined synthetic workload models, based on
+ *		instruction mix analysis, allow a realistic workload emulation of everyday
+ *		applications such as QoS streaming (video player) or performance types (gzip). Specific
+ *		load profiles can be issued to be able to analyse its impact on energy consumption and
+ *		runtime. 
+ *		For the manual refer to "README.md".
  *
  *-------------------------------------------------------------------
  * LICENSE      BSD-3
@@ -58,6 +65,7 @@
 //#include <sstream>
 #include <fstream>
 #include <time.h>
+#include <math.h>
 //#include <linux/unistd.h>
 //#include <linux/kernel.h>
 //#include <linux/types.h>
@@ -77,7 +85,7 @@
 
 #define VERSION_MAJOR 1
 #define VERSION_MINOR 1
-#define VERSION_REV 0
+#define VERSION_REV 1
 #define VERSION_DATE __DATE__
 #define VERSION_TIME __TIME__
 #define STATUS "      "
@@ -127,7 +135,7 @@ void print_help(void) {
 
 	//write(1,"\E[H\E[2J",7);
 	printf("epEBench Version %d.%d.%d (%s %s)\n\n", VERSION_MAJOR, VERSION_MINOR, VERSION_REV, VERSION_DATE, VERSION_TIME);
-	printf("Usage: epebench [-h] [-v] [-tTIME] [-iINSTR] [-mMODEL] [-nTHREADS] [-aCPU] [-uUSAGE] [-d] [-p]\n\n");
+	printf("Usage: epebench [-h] [-v] [-tTIME] [-iINSTR] [-mMODEL] [-nTHREADS] [-aCPU] [-uUSAGE] [-d] [-lN] [-p]\n\n");
 	printf("EpEBench is an energy benchmark capable of creating a realistic workload on a \n"
             "multi-core system, and can be parametrized in order to stress only a certain \n"
             "aspect of the workload on the CPU\n\n");
@@ -277,8 +285,11 @@ int main (int argc, char **argv)
                     }
                     break;
                 case 'l':       // loops
-                    loops = abs(atoi(optarg));
-                    loops = (loops == 0) ? 1 : loops;
+			if (*argv[--optind] == '-') loops = 1;
+			else {
+                    		loops = abs(atoi(optarg));
+                    		loops = (loops == 0) ? 1 : loops;
+			}
                     loop_mode = true;
                     break;
                 case 'h':       // help - intentionally without break
@@ -289,6 +300,7 @@ int main (int argc, char **argv)
                     else if (optopt == 'u') fprintf (stderr, "Option -%c requires an argument.\n", optopt);
                     else if (optopt == 'a') fprintf (stderr, "Option -%c requires an argument.\n", optopt);
                     else if (optopt == 'm') fprintf (stderr, "Option -%c requires an argument.\n", optopt);
+		    else if (optopt == 'l') { loops = 1; loop_mode = true; break; }
                     else if (isprint (optopt)) fprintf (stderr, "Unknown option `-%c'.\n", optopt);
                     else fprintf (stderr, "Unknown option character `\\x%x'.\n", optopt);
 					print_help();
@@ -320,7 +332,7 @@ int main (int argc, char **argv)
     else if (loop_mode) {
 		printf("=> Loop mode activated.\n");
 		strcpy(var_str,"(avg)");
-		}
+	}
 
         //************ start benchmark ***********************************************
 
@@ -492,7 +504,7 @@ int main (int argc, char **argv)
         while (m--) printf("%s ",param[m]->modelName);
         printf("\n");
         if (!max_instcnt) printf("    runtime :   %2.1fs\n", sum_tim);
-        else printf("    Inst count: %.0lf Mio\n", max_instcnt);
+        else printf("    Inst cnt:   %.0lf Mio\n", max_instcnt);
 
         float k=0;
         printf("\nReturned pthread affinity and core load:\n");
@@ -516,21 +528,23 @@ int main (int argc, char **argv)
 
         gettimeofday(&t0, NULL);        // start time measurement
 
-        if (!max_instcnt) {
+        if (!max_instcnt || loop_mode) {
             if (loop_mode) {            // enter loop mode
+		loops = max_instcnt ? INFINITY : loops;
                 printf("Loop mode settings:\n");
                 printf("    Setpoints:  ");
                 for (step = 0; step < max_runs; step++) printf("[%2.0f%%/%2.2fs] ", usage[step%u_cnt]*100, runtime[step%t_cnt]);
               	printf("\n");
-				
-                for (loop_cnt; loop_cnt < loops; loop_cnt++) {
-					printf("    loops#   :  %d/%d\n", loop_cnt+1, loops);
-
+                for  (loop_cnt = 0; loop_cnt < loops; loop_cnt++) {
+			if (done0) break;
+			if (!max_instcnt) printf("    loops#   :  %d/%d\n", loop_cnt+1, loops);
+			else printf("    loops#   :  %d\n", loop_cnt+1);
                     for (step = 0; step < max_runs; step++) {
+			if (done0) break;
                         tot_usage = usage[step%u_cnt];
                         facUsage = usage[step%u_cnt] / usage[0];
 						printf("    steps#   :  %d/%d\n\n", step+1, max_runs);
-                        usleep(runtime[step%t_cnt]*1E6);
+                       	usleep(runtime[step%t_cnt]*1E6);
 						printf("\n\033[3A");
                     }
 					printf("\n\033[2A");
