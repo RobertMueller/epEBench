@@ -15,8 +15,9 @@
  *              1.0.3
  *              1.0.4 : minor fixes
  *              1.1.0 : runtime entry now with floating point
- *			loop mode added: runs specific load setpoints in a loop
- *		1.1.1 : loop mode modified: profile run with specific inst count target
+ *						loop mode added: runs specific load setpoints in a loop
+ *				1.1.1 : loop mode modified: profile run with specific inst count target
+ *				1.1.2 : possibility to dis/enable secondary loop controller added
  *-------------------------------------------------------------------
  * Full Description: 
  *		EpEBench is an energy benchmark capable of creating a realistic workload on 
@@ -62,20 +63,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-//#include <sstream>
 #include <fstream>
 #include <time.h>
 #include <math.h>
-//#include <linux/unistd.h>
-//#include <linux/kernel.h>
-//#include <linux/types.h>
-//#include <sys/syscall.h>
 #include <pthread.h>
 #include <errno.h>
-//#include <iostream>
-//#include <ctype.h>
 #include <sys/time.h>
-//#include <time.h>
 
 #include "ebmodels.h"
 #include "ebloads.h"
@@ -85,12 +78,16 @@
 
 #define VERSION_MAJOR 1
 #define VERSION_MINOR 1
-#define VERSION_REV 1
+#define VERSION_REV 2
 #define VERSION_DATE __DATE__
 #define VERSION_TIME __TIME__
 #define STATUS "      "
 #define MAX_THREADS 100
 #define MAX_RUNS 50
+#define ENABLE 1
+#define DISABLE 0
+#define AUTO 2
+#define ENA_MIN_TIME 10
 
 #define RT_TASK
 
@@ -148,7 +145,7 @@ void print_help(void) {
 	printf("\t-a CPU {CPU1...CPUn}\tCPU affinity; amount or list of used cores\n");
 	printf("\t-i N\t\t\tMaximum No. of instructions [Mio]\n");
 	printf("\t-l N\t\t\tLoop mode [Note-4]. No. of load profile loops\n");
-	printf("\t-d \t\t\tCPU-usage process disable.\n\t\t\t\tSecondary load controller will not be working\n");
+	printf("\t-d M\t\t\tSecondary load controller mode.\n\t\t\t\t0 - disabled / 1 - enabled / 2 - auto mode\n");
 	printf("\t-p \t\t\tTest pattern mode [Note-1]\n");
 	printf("\t-r \t\t\tEnable thread pinning mode\n");
 	printf("\t-h \t\t\tShow this help message\n");
@@ -178,6 +175,7 @@ int main (int argc, char **argv)
     int s, i, j;
     struct timeval t0, t1;
     char var_str[6] = "    ";
+    int cpuCntrMode = AUTO;  // CPU control mode = AUTO
 
  	void* (*pt2loadfoo[MAX_THREADS])(void*) = {ebmodel, NULL};
 
@@ -186,6 +184,7 @@ int main (int argc, char **argv)
 	cpu_set_t cpuset;
 
 	facUsage = 1;   // init factor for loop run
+	enaCpuCntr = true; // enable secondary CPU controller (default) 
 
 	remove(LOG_FILE);
 	//write(1,"\E[H\E[2J",7);		// clear screen
@@ -219,7 +218,7 @@ int main (int argc, char **argv)
     opterr = 0;
 
     if (argc > 1) {
-        while ((c = getopt (argc, argv, "m:a:u:t:n:i:l:pdhvr")) != EOF) {
+        while ((c = getopt (argc, argv, "m:a:u:t:n:i:l:d:phvr")) != EOF) {
             switch (c)
             {
                 case 'm':       // model to run
@@ -259,9 +258,23 @@ int main (int argc, char **argv)
                 case 'i':       // max instruction counts in million
                     max_instcnt = (double)abs(atoi(optarg));
                     break;
-                case 'd':       // disable CPU usage output
-                    show_usage = false;
-                    printf("=> CPU-usage process disabled. Secondary load controller is not working!\n");
+                case 'd':       // set CPU controller mode
+                    switch (abs(atoi(optarg))) {
+						case 0:
+							enaCpuCntr = false;
+							cpuCntrMode = DISABLE;
+							printf("=> Secondary load controller disabled.\n");
+							break;
+						case 1:
+							enaCpuCntr = true;
+							cpuCntrMode = ENABLE;
+							printf("=> Secondary load controller permanently enabled.\n");
+							break;
+						default:
+							enaCpuCntr = true;
+							cpuCntrMode = AUTO;
+							printf("=> Secondary load controller set to AUTO-mode (default).\n");
+						}
                     break;
 				case 'p':       // run test pattern
                     pattern = true;
@@ -300,6 +313,7 @@ int main (int argc, char **argv)
                     else if (optopt == 'u') fprintf (stderr, "Option -%c requires an argument.\n", optopt);
                     else if (optopt == 'a') fprintf (stderr, "Option -%c requires an argument.\n", optopt);
                     else if (optopt == 'm') fprintf (stderr, "Option -%c requires an argument.\n", optopt);
+		    else if (optopt == 'd') fprintf (stderr, "Option -%c requires an argument.\n", optopt);
 		    else if (optopt == 'l') { loops = 1; loop_mode = true; break; }
                     else if (isprint (optopt)) fprintf (stderr, "Unknown option `-%c'.\n", optopt);
                     else fprintf (stderr, "Unknown option character `\\x%x'.\n", optopt);
@@ -530,21 +544,22 @@ int main (int argc, char **argv)
 
         if (!max_instcnt || loop_mode) {
             if (loop_mode) {            // enter loop mode
-		loops = max_instcnt ? INFINITY : loops;
+				loops = max_instcnt ? INFINITY : loops;
                 printf("Loop mode settings:\n");
                 printf("    Setpoints:  ");
                 for (step = 0; step < max_runs; step++) printf("[%2.0f%%/%2.2fs] ", usage[step%u_cnt]*100, runtime[step%t_cnt]);
               	printf("\n");
                 for  (loop_cnt = 0; loop_cnt < loops; loop_cnt++) {
-			if (done0) break;
-			if (!max_instcnt) printf("    loops#   :  %d/%d\n", loop_cnt+1, loops);
-			else printf("    loops#   :  %d\n", loop_cnt+1);
-                    for (step = 0; step < max_runs; step++) {
-			if (done0) break;
+					if (done0) break;
+					if (!max_instcnt) printf("    loops#   :  %d/%d\n", loop_cnt+1, loops);
+					else printf("    loops#   :  %d\n", loop_cnt+1);
+				    for (step = 0; step < max_runs; step++) {
+						if (done0) break;
                         tot_usage = usage[step%u_cnt];
                         facUsage = usage[step%u_cnt] / usage[0];
 						printf("    steps#   :  %d/%d\n\n", step+1, max_runs);
-                       	usleep(runtime[step%t_cnt]*1E6);
+                       	if (cpuCntrMode == AUTO) enaCpuCntr = runtime[step%t_cnt] < ENA_MIN_TIME ? false : true;
+						usleep(runtime[step%t_cnt]*1E6);
 						printf("\n\033[3A");
                     }
 					printf("\n\033[2A");

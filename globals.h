@@ -45,6 +45,7 @@ extern volatile double instcnt, max_instcnt;
 extern volatile int imemBuf[];
 extern volatile double dmemBuf[];
 extern volatile float fmemBuf[];
+extern bool enaCpuCntr;
 
 struct globargs {
     struct args* globalthr_args;

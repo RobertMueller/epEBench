@@ -76,6 +76,7 @@
 //globals
 double volatile max_instcnt, instcnt;
 float volatile k_cpu = 0;
+bool enaCpuCntr = true;
 
 struct args {
     int counter;
@@ -287,15 +288,18 @@ void* ebmodel(void* ptr) {
                 if ((instcnt > max_instcnt) && max_instcnt) done0 = 1; // stop benchmarking if max instruction counts reached
 
 #ifdef _CPULOAD_CNTR // CPU load control
-                if (param->thrNo == 0 && cpu_usage_avg) {
-                    e1 = tot_usage - cpu_usage_avg;
-                    esum1 += e1;
-                    k_cpu = (KP1*e1 + KI1*esum1);
-                    if (target_usage*facUsage + k_cpu < 0.01) k_cpu = 0.01 - target_usage*facUsage; // limit to min 1% CPU load
+		if(enaCpuCntr) {
+                  if (param->thrNo == 0 && cpu_usage_avg) {
+                      e1 = tot_usage - cpu_usage_avg;
+                      esum1 += e1;
+                      k_cpu = (KP1*e1 + KI1*esum1);
+                      if (target_usage*facUsage + k_cpu < 0.01) k_cpu = 0.01 - target_usage*facUsage; // limit to min 1% CPU load
 #ifdef _DEBUG
                     outstrcpu << stime+rtime << "\t" << k_cpu << "\t" << tot_usage << "\t" << cpu_usage_avg << "\n";
 #endif // DEBUG
-                }
+                  }
+		}
+		else k_cpu = 0;
 #endif // _CPULOAD_CNTR
 
 #ifdef _PIN_CORE  // reallocate thread to CPU, if changed by OS

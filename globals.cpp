@@ -50,7 +50,7 @@ volatile int imemBuf[MEM_SIZE];
 volatile double dmemBuf[MEM_SIZE];
 volatile float fmemBuf[MEM_SIZE];
 volatile double facUsage;
-
+bool enaCpuCntr;
 
 
 
